@@ -38,12 +38,12 @@ end
 for i = 1:size(varName,2) %big loop
 	clear    EV LFP fileForNSx % the saved variables
     
-    nameINFO	= string(strcat(varName(i).INFO,    '.ns2_2018-12-21.mat'));
-    nameLFP     = string(strcat(varName(i).LFP,     '.ns2_2018-12-21.mat'));
+    nameINFO	= string(strcat(varName(i).INFO,    '.ns2_2019-01-08.mat'));
+    nameLFP     = string(strcat(varName(i).LFP,     '.ns2_2019-01-08.mat'));
     load(nameINFO); 
     load(nameLFP);
     
-    clearvars -except EV LFP fileForNSx varName
+    clearvars -except EV LFP fileForNSx varName i
 
     %% 4. PROCESS
     clear stimLFP
@@ -56,15 +56,16 @@ for i = 1:size(varName,2) %big loop
     % % % %     stimtm = round(EV.tp(tr,1)/30) ;% divide by 30 to convert to 1kHz. Note, LFP and MUA already in 1kHZ 
 
     % % %     %%% use for ns2 files
-        stimtm2 = round(EV.tp(tr,1)/30) ;% divide by 30 to convert to 1kHz. Note, LFP and MUA already in 1kHZ
-        stimtm1 = EV.tp(tr,1);
-        refwin = stimtm2-pre:stimtm2+post;
+        stimtm = round(EV.tp(tr,1)/30) ;% divide by 30 to convert to 1kHz. Note, LFP and MUA already in 1kHZ
+        refwin = stimtm-pre:stimtm+post;
         stimLFP(tr,:,:) = LFP(refwin,:);
     end
 
     % COMPUTE AVERAGE ACROSS TRIALS
     avgLFP = squeeze(mean(stimLFP,1));
-    avgLFP_elC = avgLFP(:,1:32);
+    avgLFP_elC = avgLFP(:,1:size(avgLFP,2));
+    %%%%% 190108 END EDIT HERE.
+    %%%%% Must account for different electrode sizes.
 
     % COMPUTE AVERAGE ACROSS TRIALS
     avgLFP = squeeze(mean(stimLFP,1));
@@ -123,17 +124,29 @@ for i = 1:size(varName,2) %big loop
     caxis([-maxval2 maxval2]);
     title('161007 sinkbtm 16');
 
+% % % 
+% % % 
+% % %     dateFormatOut = 'yyyy-mm-dd';
+% % %     saveDate = datestr(now,dateFormatOut);
+% % %     saveName = strcat('fig_CSD_',Filename,'_',saveDate);
+% % %     clear dateFormatOut saveDate
+% % %     saveas(figure(3),saveName)
+% % % 
 
+    % 4. SAVE OUTPUT
 
-    dateFormatOut = 'yyyy-mm-dd';
-    saveDate = datestr(now,dateFormatOut);
-    saveName = strcat('fig_CSD_',Filename,'_',saveDate);
-    clear dateFormatOut saveDate
-    saveas(figure(3),saveName)
+            cd(baseDir)
+            %Final variable exports are 'EV', 'LFP', 'Unq_cond' 'fileForNSx'
+            dateFormatOut = 'yyyy-mm-dd';
+            saveDate = datestr(now,dateFormatOut);
+            saveNameCSD = strcat('INFOofBRFS','_',fileForNSx(1).name,'_',saveDate);
+            saveNameCSD(strcat(saveNameINFO,'.mat'),'EV','fileForNSx');
 
+            saveNameLFP = strcat('LFPofBRFS','_',fileForNSx(1).name,'_',saveDate);
+            saveNameCSD(strcat(saveNameLFP,'.mat'),'LFP','-v7.3');
 
-   
-  
+            clear dateFormatOut saveDate
+       
 end             % end of allFiles loop
 
         %notification sound
