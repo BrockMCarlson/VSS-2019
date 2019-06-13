@@ -1,28 +1,62 @@
+% % test
+% 
+% for i = 1:8 
+%    sb(i) = meanOfWindow.d.simultBi(i)- meanOfWindow.d.stimulDi(i);
+%    numbersToOperate(i,:) = [meanOfWindow.d.simultBi(i) meanOfWindow.d.stimulDi(i)];
+%    ad(i) = meanOfWindow.d.simultBi(i)+ meanOfWindow.d.stimulDi(i);
+%    idx(i) = sb(i)/ad(i);
+%     
+% end
 
 
-
-% 6.establish cortical depth
-corticaldepth = (1.2:-0.1:-0.5);
-TM = [-pre:1:post];
-condition = 'NO soa';
-
-
-% 7. Plot
 figure
-    % 7.a. lineplot
-    subplot(1,2,1)
-    f_ShadedLinePlotbyDepth(cutACE_NOsoa,corticaldepth,TM,[],1)
-    title(condition,'interpreter','none')
-    set(gcf,'Position',[1 40 700 1200]); 
-    
-    % 7.b. filterplot
-    CSDf = filterCSD(cutACE_NOsoa);
-    subplot(1,2,2)
-    imagesc(TM,corticaldepth,CSDf); colormap(flipud(jet));
-    climit = max(abs(get(gca,'CLim'))*.8);
-    set(gca,'CLim',[-3160.1 3160.1],'ydir','normal','Box','off','TickDir','out')
-    hold on;
-    plot([0 0], ylim,'k')
-    yticks(1.2:.2:-.5)
-    c = colorbar;
-    
+for i = 1:8
+    plot(blWin1.biNOsoaPS(i,800:1500))
+    hold on
+    legend
+end
+title('biNOsoaPS')
+figure
+for i = 1:8
+    plot(blWin1.diNOsoa(i,800:1500))
+    hold on
+    legend
+end
+title('diNOsoa')
+figure
+for i = 1:8
+    plot(blWin2.biWsoaPS(i,stimtm2+250:stimtm2+300))
+    hold on
+    legend
+end
+title('biWsoaPS')
+figure
+for i = 1:8
+    plot(blWin2.diWsoaPS(i,stimtm2+250:stimtm2+300))
+    hold on
+    legend
+end
+title('diWsoaPS')
+
+
+
+
+
+figure
+plot(mean(blWin2.biWsoaPS(:,stimtm2+250:stimtm2+300),1))
+hold on
+plot(mean(blWin2.diWsoaPS(:,stimtm2+250:stimtm2+300),1))
+legend
+
+figure
+for i = 1:8
+plot(blWin2.diWsoaPS(i,stimtm2+50:stimtm2+350))
+hold on
+end
+
+
+
+
+((-800 - -1200) / abs(-1200))*100
+figure
+

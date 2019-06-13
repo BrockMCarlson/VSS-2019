@@ -3,9 +3,10 @@ clear
 close all
 
 %% 1. Editable Variables
-condition = 'dicopWsoa_NPSflash'; %'dicopNOsoa', 'dicopWsoa_PSflash', 'dicopWsoa_NPSflash'
+condition = 'dicopNOsoa'; %'biPS','biNPS','dichopWsoa_NPSadapt&PSflash','dicopNOsoa', 'dicopWsoa_PSflash', 'dicopWsoa_NPSflash'
+savetitle = strcat(condition,'_full time course');
 pre = 100;
-post = 500;
+post = 1600;
 sinkAllocate = 'BMC_DfS'; %'BMC_DfS','BMC_ChanNum','Old_DfS','Old_ChanNum'
 baseDirectory = 'E:\LaCie';
 stepDirectory = 'E:\LaCie\all BRFS';
@@ -79,7 +80,7 @@ timerange = [-pre:post];
 AllCSDaligned(:,:,:) = nan(100,[size(timerange,2)],[size(SessionParamsForCondition.Date,1)]);
 
 for a = 1:size(SessionParamsForCondition.Date,1) %big loop
-    clearvars -except AllCSDaligned a allfolders condition pre post SessionParamsForCondition 
+    clearvars -except savetitle AllCSDaligned a allfolders condition pre post SessionParamsForCondition 
     
 % 3.b. enter folder
 for b = 1:size(allfolders,1)
@@ -222,33 +223,10 @@ end
 
 
 end %end of 'a' loop, #BigLoop.
-clearvars -except AllCSDaligned a allfolders condition pre post SessionParamsForCondition 
+clearvars -except savetitle AllCSDaligned a allfolders condition pre post SessionParamsForCondition 
 
 % 5. Average CSD Effect (ACE)
 ACE = squeeze(nanmean(AllCSDaligned,3));
 
-% 6. cut ACE and establish cortical depth
-corticaldepth = (1.2:-0.1:-0.5);
-cutACE = ACE(38:55,:);
-TM = [-pre:1:post];
-
-
-% 7. Plot
-figure
-    % 7.a. lineplot
-    subplot(1,2,1)
-    f_ShadedLinePlotbyDepth(cutACE,corticaldepth,TM,[],1)
-    title(condition,'interpreter','none')
-    set(gcf,'Position',[1 40 700 1200]); 
-    
-    % 7.b. filterplot
-    CSDf = filterCSD(cutACE);
-    subplot(1,2,2)
-    imagesc(TM,corticaldepth,CSDf); colormap(flipud(jet));
-    climit = max(abs(get(gca,'CLim'))*.8);
-    set(gca,'CLim',[-2813.1 2813.1],'ydir','normal','Box','off','TickDir','out')
-    hold on;
-    plot([0 0], ylim,'k')
-    yticks(1.2:.2:-.5)
-    c = colorbar;
-    
+cd('E:\LaCie\VSS 2019 figs\190424 extended time CSDs\extended time matlab variables')
+save(strcat(savetitle,'.mat'))

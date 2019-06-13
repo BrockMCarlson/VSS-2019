@@ -1,11 +1,3 @@
-% BMC
-% recursive Make Workspace 
-% EVP
-% This gets the workspace variables from all raw data files in a given
-% directory.
-% Outputs - LFP (1kHz from ns2 file), 
-%         - INFO: EV (30kHz. Downsample later), and fileForNSx.name gives 
-%           the file origion. 
 clear 
 close all
 
@@ -157,10 +149,7 @@ cd(stepDir)
                 end
                 clear prefilteredLFP bwb bwa 1Wn
                 clear LFP
-                %%% LFP = downsample(lpLFP,30); % downsample to 1kHz % Not
-                %%% needed in EVP taken from ns2. Check other ns2 data for
-                %%% BRFS days
-                LFP = lpLFP;
+                LFP = downsample(lpLFP,30); % downsample to 1kHz
                 clear lpLFP
 
 
