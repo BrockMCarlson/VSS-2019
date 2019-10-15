@@ -17,7 +17,7 @@ clrD = [0,136,55]/255;
 
 
 % load and create structures based on conditions
-cd('E:\LaCie\VSS 2019 figs\190429 figs post MC meeting\filteredMatVar')
+cd('G:\LaCie\VSS 2019 figs\190429 figs post MC meeting\filteredMatVar')
     biNOsoaPS	= load('biPSNOsoafiltered.mat');
     diNOsoa     = load('dicopNOsoafiltered.mat');
 
@@ -79,6 +79,13 @@ PostStim.BICsoa = AVG.diWsoaPS(801:1701);
     end
 
 
+%% GET SEM
+fields = fieldnames(sinkAvgAllCSDaligned);
+clear i
+for i = 1:size(fields,1)
+    STD = std(sinkAvgAllCSDaligned.(fields{i}),1);
+    SEM.(fields{i}) = STD./sqrt(size(sinkAvgAllCSDaligned.(fields{i}),1));
+end
 
 
 %% Plot
@@ -88,7 +95,12 @@ figure
 subplot(2,1,1)
    a =  plot(TM,PostStim.BCnosoa,'color',clrA,'DisplayName','biNOsoaPS');
     hold on
+    errorbar(-100:100:801,PostStim.BCnosoa(1,1:100:end),SEM.biNOsoaPS(1,1:100:901),'-s','MarkerSize',5,'MarkerEdgeColor',clrA,'MarkerFaceColor',clrA,'LineStyle','none')
+    hold on
     b = plot(TM,PostStim.BICnosoa,'color',clrB,'DisplayName','diNOsoa');
+    hold on
+    errorbar(-100:100:801,PostStim.BICnosoa(1,1:100:end),SEM.diNOsoa(1,1:100:901),'-s','MarkerSize',5,'MarkerEdgeColor',clrB,'MarkerFaceColor',clrB,'LineStyle','none')
+
 
     ylim([-6500 4000])
     box off
@@ -102,8 +114,12 @@ subplot(2,1,1)
 subplot(2,1,2)
     c = plot(TM,PostStim.BCsoa,'color',clrC,'DisplayName','biWsoaPS');
     hold on
+    errorbar(-100:100:801,PostStim.BCsoa(1,1:100:end),SEM.biWsoaPS(1,801:100:end),'-s','MarkerSize',5,'MarkerEdgeColor',clrC,'MarkerFaceColor',clrC,'LineStyle','none')
+    hold on
     d = plot(TM,PostStim.BICsoa,'color',clrD,'DisplayName','diWsoaPS');
-
+    hold on
+    errorbar(-100:100:801,PostStim.BICsoa(1,1:100:end),SEM.diWsoaPS(1,801:100:end),'-s','MarkerSize',5,'MarkerEdgeColor',clrD,'MarkerFaceColor',clrD,'LineStyle','none')
+   
     ylim([-6500 4000])
     box off
     subset = [c d];
@@ -113,5 +129,12 @@ subplot(2,1,2)
     legend(subset,'Location','best')
     title(titletext)
     
-    cd('E:\LaCie\VSS 2019 figs\190512 Draft 10')
+    cd('G:\LaCie\VSS 2019 figs\190512 Draft 10')
+    
+
+    
+    
+    %% Plot SEM BARS
+    
+    
 

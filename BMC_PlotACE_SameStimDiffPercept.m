@@ -7,8 +7,8 @@ clear
 
 % % % ylimit = [-6500 2000];
 pre = 100;
-post = 1600;
-TM = [-pre:1:post];
+post = 800;
+TM = -pre:1:post;
 AnalyzeSink = 'lower'; % 'lower' or 'upper'
 
 color.biNOsoa = [5,113,176]/255; % light purple
@@ -18,7 +18,7 @@ color.diWsoa = [0,136,55]/255; %dark green
 
 
 % load and create structures based on conditions
-cd('E:\LaCie\VSS 2019 figs\190429 figs post MC meeting\filteredMatVar')
+cd('G:\LaCie\VSS 2019 figs\190429 figs post MC meeting\filteredMatVar')
     biNOsoaPS	= load('biPSNOsoafiltered.mat');
     diNOsoa     = load('dicopNOsoafiltered.mat');
 

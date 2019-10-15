@@ -9,7 +9,7 @@ ylimit = [-5000 2000];
 pre = 100;
 post = 1600;
 TM = [-pre:1:post];
-AnalyzeSink = 'upper'; % 'lower' or 'upper'
+AnalyzeSink = 'lower'; % 'lower' or 'upper'
 
 
 color.biNOsoa = [5,113,176]/255; % blue
@@ -21,7 +21,7 @@ color.diWsoa = [0,136,55]/255; %dark green
 
 
 % load and create structures based on conditions
-cd('E:\LaCie\VSS 2019 figs\190429 figs post MC meeting\filteredMatVar')
+cd('G:\LaCie\VSS 2019 figs\190429 figs post MC meeting\filteredMatVar')
     biNOsoaPS	= load('biPSNOsoafiltered.mat');
     diNOsoa     = load('dicopNOsoafiltered.mat');
 
@@ -120,8 +120,8 @@ postStimTM = -100:1:800;
 h = figure;
     m = plot(postStimTM,AVG.monocularPS,'color','k','DisplayName','monocular');
     hold on
-    plot(postStimTM,ci.monocularPS(1,:),'color','k',':')
-    hold on
+%     plot(postStimTM,ci.monocularPS(1,:),'color','k',':')
+%     hold on
     a = plot(postStimTM,AVG.biWsoaPS,'color',color.biWsoa,'DisplayName','biWsoaPS');
     hold on
     d = plot(postStimTM,AVG.diWsoaPS,'color',color.diWsoa,'DisplayName','diWsoaPS');

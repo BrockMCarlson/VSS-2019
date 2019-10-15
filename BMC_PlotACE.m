@@ -1,6 +1,6 @@
 %% BMC_PlotACE
 clear
-close all
+
 
 
 corticaldepth = (1.2:-0.1:-0.5);
@@ -22,11 +22,11 @@ titletxt.diWsoaPS = 'Dichoptic gratings presented w/ 800ms SOA.NPS adapted.PS is
 % % %     diWsoaPS    = load('dichopWsoa_fullTrialPSfiltered.mat');
 
 
-cd('E:\LaCie\VSS 2019 figs\190429 figs post MC meeting\filteredMatVar')
+cd('G:\LaCie\VSS 2019 figs\190429 figs post MC meeting\filteredMatVar')
     biNOsoaPS	= load('biPSNOsoafiltered.mat');
     diNOsoa     = load('dicopNOsoafiltered.mat');
 
-cd('E:\LaCie\VSS 2019 figs\190506 RoughDraft2')
+cd('G:\LaCie\VSS 2019 figs\190506 RoughDraft2')
     biWsoaPS    = load('dbck_biWsoa.mat');
     diWsoaPS    = load('dbck_diWsoa.mat');
     

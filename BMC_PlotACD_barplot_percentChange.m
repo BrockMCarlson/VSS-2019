@@ -20,7 +20,7 @@ clrD = [0,136,55]/255;
 
 
 % load and create structures based on conditions
-cd('E:\LaCie\VSS 2019 figs\190429 figs post MC meeting\filteredMatVar')
+cd('G:\LaCie\VSS 2019 figs\190429 figs post MC meeting\filteredMatVar')
     biNOsoaPS	= load('biPSNOsoafiltered.mat');
     diNOsoa     = load('dicopNOsoafiltered.mat');
 
